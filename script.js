@@ -8,7 +8,6 @@ const copyButton = document.getElementById('copy-button');
 const practiceButton = document.getElementById('practice-button');
 const copyMessageElement = document.getElementById('copy-message');
 const endSessionModal = document.getElementById('end-session-modal');
-const retryIncorrectButton = document.getElementById('retry-incorrect');
 const newSessionButton = document.getElementById('new-session');
 
 const WORDS_PER_PAGE = 8;
@@ -33,17 +32,12 @@ function updateCounters() {
 }
 
 function displayIncorrectWords() {
-    if (incorrectWordsList.length > 0) {
-        incorrectWordsBox.classList.remove('hidden');
-        incorrectWordsListElement.innerHTML = '';
-        incorrectWordsList.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `<strong>Doğrusu:</strong> ${item.correctWord} <br> <strong>Senin Yazdığın:</strong> <span>${item.typedWord}</span>`;
-            incorrectWordsListElement.appendChild(listItem);
-        });
-    } else {
-        incorrectWordsBox.classList.add('hidden');
-    }
+    incorrectWordsListElement.innerHTML = '';
+    incorrectWordsList.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<strong>Doğrusu:</strong> ${item.correctWord} <br> <strong>Senin Yazdığın:</strong> <span>${item.typedWord}</span>`;
+        incorrectWordsListElement.appendChild(listItem);
+    });
 }
 
 function updateDisplayedWords() {
@@ -80,7 +74,7 @@ function generateAndDisplayWords(listToUse) {
     updateDisplayedWords();
 }
 
-function startNewSession(mode = 'new') {
+function startNewSession() {
     endSessionModal.classList.add('hidden');
     currentWordIndex = 0;
     correctWordsCount = 0;
@@ -88,19 +82,7 @@ function startNewSession(mode = 'new') {
     updateCounters();
     inputBox.value = '';
     
-    if (mode === 'new') {
-        incorrectWordsList = [];
-        displayIncorrectWords();
-        generateAndDisplayWords(masterWordList);
-    } else if (mode === 'practice') {
-        if (incorrectWordsList.length > 0) {
-            const practiceList = incorrectWordsList.map(item => item.correctWord);
-            generateAndDisplayWords(practiceList);
-        } else {
-            alert("Yanlış kelime bulunamadı, yeni bir çalışma başlatılıyor.");
-            generateAndDisplayWords(masterWordList);
-        }
-    }
+    generateAndDisplayWords(masterWordList);
     inputBox.focus();
 }
 
@@ -108,7 +90,6 @@ inputBox.addEventListener('keyup', (e) => {
     if (e.key === ' ') {
         const typedWord = inputBox.value.trim();
         
-        // Boş metin girilirse işlemi durdur
         if (typedWord === '') {
             inputBox.value = '';
             return;
@@ -129,17 +110,33 @@ inputBox.addEventListener('keyup', (e) => {
         
         updateCounters();
         
-        // Sadece set tamamlandığında modalı göster
+        // Sadece 8 kelimelik set tamamlandığında yeni bir set oluştur
         if (currentWordIndex >= currentWordList.length) {
-            endSessionModal.classList.remove('hidden');
+            generateAndDisplayWords(masterWordList);
         } else {
             updateDisplayedWords();
+        }
+        
+        // Tüm kelimeler bittiğinde modalı göster
+        if (correctWordsCount + incorrectWordsCount === masterWordList.length && masterWordList.length > 0) {
+            endSessionModal.classList.remove('hidden');
         }
     }
 });
 
 practiceButton.addEventListener('click', () => {
-    startNewSession('practice');
+    if (incorrectWordsList.length > 0) {
+        currentWordIndex = 0;
+        correctWordsCount = 0;
+        incorrectWordsCount = 0;
+        updateCounters();
+        inputBox.value = '';
+        const practiceList = incorrectWordsList.map(item => item.correctWord);
+        generateAndDisplayWords(practiceList);
+        inputBox.focus();
+    } else {
+        alert("Yanlış kelime bulunamadı, yeni bir çalışma başlatılıyor.");
+    }
 });
 
 copyButton.addEventListener('click', () => {
@@ -153,9 +150,7 @@ copyButton.addEventListener('click', () => {
     });
 });
 
-retryIncorrectButton.addEventListener('click', () => startNewSession('practice'));
-newSessionButton.addEventListener('click', () => startNewSession('new'));
-
+newSessionButton.addEventListener('click', () => startNewSession());
 
 window.onload = () => {
     fetch('kelimeler.txt')
@@ -166,7 +161,7 @@ window.onload = () => {
             if (masterWordList.length < WORDS_PER_PAGE) {
                  masterWordList = [...masterWordList, ...masterWordList];
             }
-            startNewSession('new');
+            startNewSession();
         })
         .catch(error => {
             console.error('Hata: Kelimeler dosyası yüklenemedi.', error);
