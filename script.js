@@ -114,6 +114,12 @@ inputBox.addEventListener('keyup', (e) => {
     if (e.key === ' ') {
         const typedWord = inputBox.value.trim();
         const currentWord = currentWordList[currentWordIndex];
+        
+        // Boş metni kontrol et
+        if (typedWord === '') {
+            inputBox.value = '';
+            return;
+        }
 
         if (typedWord === currentWord) {
             correctWordsCount++;
@@ -128,13 +134,9 @@ inputBox.addEventListener('keyup', (e) => {
 
         updateCounters();
         
+        // Eğer tüm kelimeler bitmişse modalı göster
         if (currentWordIndex >= currentWordList.length) {
-            if (masterWordList.length > WORDS_PER_PAGE) {
-                endSessionModal.classList.remove('hidden');
-            } else {
-                alert("Tebrikler! Tüm kelimeleri tamamladınız.");
-                startNewSession('new');
-            }
+            endSessionModal.classList.remove('hidden');
         } else {
             updateDisplayedWords();
         }
@@ -169,6 +171,7 @@ window.onload = () => {
         .then(response => response.text())
         .then(data => {
             masterWordList = data.split(/\s+/).filter(word => word.length > 0);
+            
             if (masterWordList.length < WORDS_PER_PAGE) {
                  masterWordList = [...masterWordList, ...masterWordList];
             }
