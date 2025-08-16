@@ -5,19 +5,17 @@ const incorrectCountElement = document.getElementById('incorrect-count');
 
 const WORDS_PER_PAGE = 8;
 
-let masterWordList = []; // Tüm kelimelerin tutulduğu ana liste
-let currentWordList = []; // O an ekranda gösterilen kelimelerin listesi
+let masterWordList = [];
+let currentWordList = [];
 let currentWordIndex = 0;
 let correctWordsCount = 0;
 let incorrectWordsCount = 0;
 
-// Sayaçları güncelleyen fonksiyon
 function updateCounters() {
     correctCountElement.textContent = `Doğru: ${correctWordsCount}`;
     incorrectCountElement.textContent = `Yanlış: ${incorrectWordsCount}`;
 }
 
-// Yeni bir 8 kelimelik rastgele set oluşturan ve ekrana basan fonksiyon
 function generateAndDisplayWords() {
     if (masterWordList.length === 0) {
         wordBox.textContent = "Kelimeler yükleniyor veya bulunamadı...";
@@ -25,41 +23,40 @@ function generateAndDisplayWords() {
     }
     
     currentWordList = [];
-    const tempWordList = [...masterWordList]; // Ana listenin kopyası
+    const tempWordList = [...masterWordList];
     
-    // 8 kelimelik rastgele bir set seç
     for (let i = 0; i < WORDS_PER_PAGE; i++) {
-        if (tempWordList.length === 0) break; // Kelime kalmadıysa döngüyü kır
+        if (tempWordList.length === 0) break;
         const randomIndex = Math.floor(Math.random() * tempWordList.length);
         currentWordList.push(tempWordList[randomIndex]);
-        tempWordList.splice(randomIndex, 1); // Seçilen kelimeyi listeden çıkar
+        tempWordList.splice(randomIndex, 1);
     }
 
-    // Seçilen kelimeleri ekrana bas
     wordBox.innerHTML = '';
     currentWordList.forEach((word, index) => {
         const span = document.createElement('span');
         span.textContent = word + ' ';
-        if (index === currentWordIndex) {
+        if (index === 0) { // Her yeni sette ilk kelimeyi vurgula
             span.classList.add('current');
         }
         wordBox.appendChild(span);
     });
 }
 
+function updateDisplayedWords() {
+    const wordsInBox = wordBox.querySelectorAll('span');
+    wordsInBox.forEach((span, index) => {
+        span.classList.remove('current');
+    });
+    if (currentWordIndex < wordsInBox.length) {
+        wordsInBox[currentWordIndex].classList.add('current');
+    }
+}
+
 inputBox.addEventListener('keyup', (e) => {
     if (e.key === ' ') {
         const typedWord = inputBox.value.trim();
         
-        // Hata kontrolü
-        if (currentWordIndex >= currentWordList.length) {
-             // Eğer 8 kelime tamamlandıysa yeni bir set oluştur
-             currentWordIndex = 0;
-             generateAndDisplayWords();
-             inputBox.value = '';
-             return;
-        }
-
         const currentWord = currentWordList[currentWordIndex];
 
         if (typedWord === currentWord) {
@@ -72,13 +69,15 @@ inputBox.addEventListener('keyup', (e) => {
         }
 
         updateCounters();
-
-        if (currentWordIndex >= currentWordList.length) {
-            // Eğer son kelime doğru yazıldıysa, yeni seti bekle
-            return;
-        }
         
-        generateAndDisplayWords();
+        // Eğer 8 kelimelik set tamamlandıysa, yeni bir set oluştur
+        if (currentWordIndex >= WORDS_PER_PAGE) {
+            currentWordIndex = 0;
+            generateAndDisplayWords();
+        } else {
+            // Tamamlanmadıysa sadece aktif kelimeyi güncelle
+            updateDisplayedWords();
+        }
     }
 });
 
