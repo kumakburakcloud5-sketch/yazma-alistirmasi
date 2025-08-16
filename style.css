@@ -1,0 +1,96 @@
+body {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 80%;
+    max-width: 800px;
+    padding: 40px;
+    background-color: #2a2a2a;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #4CAF50;
+    margin-bottom: 30px;
+}
+
+.word-box {
+    background-color: #333;
+    color: #ccc;
+    font-size: 1.8rem;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    min-height: 50px;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.input-box {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #444;
+    color: #f0f0f0;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-box:focus {
+    background-color: #555;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
+}
+
+.correct {
+    color: #4CAF50;
+}
+
+.incorrect {
+    color: #F44336;
+    text-decoration: underline;
+}
+
+.current {
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+.counters {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #f0f0f0;
+}
+
+.counters div {
+    background-color: #333;
+    padding: 10px 20px;
+    border-radius: 8px;
+    min-width: 120px;
+    text-align: center;
+}
+
+#correct-count {
+    color: #4CAF50;
+}
+
+#incorrect-count {
+    color: #F44336;
+}
