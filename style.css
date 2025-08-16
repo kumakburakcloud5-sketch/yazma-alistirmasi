@@ -12,7 +12,7 @@ body {
 .main-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: 90%;
     max-width: 1200px;
     gap: 30px;
@@ -185,6 +185,10 @@ h1 {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+}
+
+.modal-overlay.hidden {
+    display: none;
 }
 
 .modal-content {
