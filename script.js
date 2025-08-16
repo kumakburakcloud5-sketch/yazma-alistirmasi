@@ -20,7 +20,6 @@ let currentWordIndex = 0;
 let correctWordsCount = 0;
 let incorrectWordsCount = 0;
 
-// Diziyi karıştırır
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -28,13 +27,11 @@ function shuffleArray(array) {
     }
 }
 
-// Sayaçları günceller
 function updateCounters() {
     correctCountElement.textContent = `Doğru: ${correctWordsCount}`;
     incorrectCountElement.textContent = `Yanlış: ${incorrectWordsCount}`;
 }
 
-// Yanlış yazılan kelimeler listesini günceller
 function displayIncorrectWords() {
     if (incorrectWordsList.length > 0) {
         incorrectWordsBox.classList.remove('hidden');
@@ -49,7 +46,6 @@ function displayIncorrectWords() {
     }
 }
 
-// O anki kelimeyi vurgular
 function updateDisplayedWords() {
     const wordsInBox = wordBox.querySelectorAll('span');
     wordsInBox.forEach(span => span.classList.remove('current'));
@@ -58,7 +54,6 @@ function updateDisplayedWords() {
     }
 }
 
-// Kelime setini oluşturur ve ekranda gösterir
 function generateAndDisplayWords(listToUse) {
     if (listToUse.length === 0) {
         wordBox.textContent = "Kelimeler yükleniyor veya bulunamadı...";
@@ -85,7 +80,6 @@ function generateAndDisplayWords(listToUse) {
     updateDisplayedWords();
 }
 
-// Yeni bir çalışma oturumu başlatır
 function startNewSession(mode = 'new') {
     endSessionModal.classList.add('hidden');
     currentWordIndex = 0;
@@ -113,14 +107,15 @@ function startNewSession(mode = 'new') {
 inputBox.addEventListener('keyup', (e) => {
     if (e.key === ' ') {
         const typedWord = inputBox.value.trim();
-        const currentWord = currentWordList[currentWordIndex];
         
-        // Boş metni kontrol et
+        // Boş metin girilirse işlemi durdur
         if (typedWord === '') {
             inputBox.value = '';
             return;
         }
-
+        
+        const currentWord = currentWordList[currentWordIndex];
+        
         if (typedWord === currentWord) {
             correctWordsCount++;
         } else {
@@ -128,13 +123,13 @@ inputBox.addEventListener('keyup', (e) => {
             incorrectWordsList.push({ typedWord: typedWord, correctWord: currentWord });
             displayIncorrectWords();
         }
-
+        
         currentWordIndex++;
         inputBox.value = '';
-
+        
         updateCounters();
         
-        // Eğer tüm kelimeler bitmişse modalı göster
+        // Sadece set tamamlandığında modalı göster
         if (currentWordIndex >= currentWordList.length) {
             endSessionModal.classList.remove('hidden');
         } else {
@@ -143,12 +138,10 @@ inputBox.addEventListener('keyup', (e) => {
     }
 });
 
-// "Sadece Bunları Çalış" butonuna tıklandığında
 practiceButton.addEventListener('click', () => {
     startNewSession('practice');
 });
 
-// "Kopyala" butonuna tıklandığında
 copyButton.addEventListener('click', () => {
     const listToCopy = incorrectWordsList.map(item => `${item.correctWord} (${item.typedWord})`).join('\n');
     navigator.clipboard.writeText(listToCopy).then(() => {
@@ -160,12 +153,10 @@ copyButton.addEventListener('click', () => {
     });
 });
 
-// Modal butonları
 retryIncorrectButton.addEventListener('click', () => startNewSession('practice'));
 newSessionButton.addEventListener('click', () => startNewSession('new'));
 
 
-// Sayfa yüklendiğinde çalıştır
 window.onload = () => {
     fetch('kelimeler.txt')
         .then(response => response.text())
