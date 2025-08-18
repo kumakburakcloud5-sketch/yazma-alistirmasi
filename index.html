@@ -8,41 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-container">
+    <div class="container">
+        <h1>Yazma Alıştırması</h1>
+        <div id="word-box" class="word-box"></div>
+        <input type="text" id="input-box" class="input-box" placeholder="Yazmaya başla...">
         
-        <div class="incorrect-words-box">
-            <h2 class="box-title">Yanlış Yazdıklarım</h2>
-            <ul id="incorrect-words-list" class="incorrect-words-list"></ul>
-            <div class="button-container">
-                <button id="practice-button" class="action-button practice-button">Sadece Bunları Çalış</button>
-                <button id="copy-button" class="action-button copy-button">Tümünü Kopyala</button>
-            </div>
-            <div id="copy-message" class="copy-message"></div>
+        <div class="counters">
+            <div id="correct-count">Doğru: 0</div>
+            <div id="incorrect-count">Yanlış: 0</div>
         </div>
-
-        <div class="typing-area">
-            <h1>Yazma Alıştırması</h1>
-            <div id="word-box" class="word-box"></div>
-            <input type="text" id="input-box" class="input-box" placeholder="Yazmaya başla...">
-            
-            <div class="counters">
-                <div id="correct-count">Doğru: 0</div>
-                <div id="incorrect-count">Yanlış: 0</div>
-            </div>
-        </div>
-
+        
     </div>
-
-    <div id="end-session-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h2>Çalışma Bitti!</h2>
-            <p>Tüm kelimeleri tamamladın. Yeni bir çalışmaya başlamak ister misin?</p>
-            <div class="modal-buttons">
-                <button id="new-session" class="modal-button">Yeni Çalışma</button>
-            </div>
-        </div>
-    </div>
-    
     <script src="script.js"></script>
 </body>
 </html>
