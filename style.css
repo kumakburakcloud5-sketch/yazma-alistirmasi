@@ -9,106 +9,13 @@ body {
     margin: 0;
 }
 
-.main-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    width: 90%;
-    max-width: 1200px;
-    gap: 30px;
-}
-
-.typing-area {
+.container {
+    width: 80%;
+    max-width: 800px;
     padding: 40px;
     background-color: #2a2a2a;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    width: 60%; /* Ortalama görünüm için sabit genişlik */
-    flex-grow: 1;
-}
-
-.incorrect-words-box {
-    flex: 1;
-    padding: 25px;
-    background-color: #2a2a2a;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    text-align: left;
-}
-
-.hidden {
-    display: none;
-}
-
-.box-title {
-    font-size: 1.5rem;
-    color: #f44336;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.incorrect-words-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    max-height: 250px;
-    overflow-y: auto;
-}
-
-.incorrect-words-list li {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    border-bottom: 1px dashed #444;
-    padding-bottom: 5px;
-}
-
-.incorrect-words-list li strong {
-    color: #fff;
-}
-
-.incorrect-words-list li span {
-    color: #f44336;
-}
-
-.button-container {
-    margin-top: 20px;
-}
-
-.action-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.practice-button {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.practice-button:hover {
-    background-color: #45a049;
-}
-
-.copy-button {
-    background-color: #f44336;
-    color: white;
-}
-
-.copy-button:hover {
-    background-color: #d32f2f;
-}
-
-.copy-message {
-    margin-top: 10px;
-    color: #4CAF50;
-    opacity: 0;
-    transition: opacity 0.5s ease;
     text-align: center;
 }
 
@@ -149,6 +56,15 @@ h1 {
     box-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
 }
 
+.correct {
+    color: #4CAF50;
+}
+
+.incorrect {
+    color: #F44336;
+    text-decoration: underline;
+}
+
 .current {
     font-weight: bold;
     color: #e0e0e0;
@@ -177,67 +93,4 @@ h1 {
 
 #incorrect-count {
     color: #F44336;
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-overlay.hidden {
-    display: none;
-}
-
-.modal-content {
-    background-color: #2a2a2a;
-    padding: 40px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    color: #f0f0f0;
-}
-
-.modal-content h2 {
-    color: #4CAF50;
-}
-
-.modal-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.modal-button {
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    color: white;
-    transition: background-color 0.3s ease;
-}
-
-#retry-incorrect {
-    background-color: #f44336;
-}
-
-#retry-incorrect:hover {
-    background-color: #d32f2f;
-}
-
-#new-session {
-    background-color: #4CAF50;
-}
-
-#new-session:hover {
-    background-color: #45a049;
 }
