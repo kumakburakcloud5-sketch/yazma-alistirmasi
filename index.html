@@ -9,6 +9,14 @@
 </head>
 <body>
     <div class="main-container">
+        
+        <div class="incorrect-words-box hidden">
+            <h2 class="box-title">Yanlış Yazdıklarım</h2>
+            <ul id="incorrect-words-list" class="incorrect-words-list"></ul>
+            <button id="practice-button" class="action-button practice-button">Sadece Bunları Çalış</button>
+            <button id="copy-button" class="action-button copy-button">Tümünü Kopyala</button>
+            <div id="copy-message" class="copy-message"></div>
+        </div>
 
         <div class="typing-area">
             <h1>Yazma Alıştırması</h1>
@@ -22,7 +30,18 @@
         </div>
 
     </div>
+
+    <div id="end-session-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Çalışma Bitti!</h2>
+            <p>Hangi kelimelerle devam etmek istersin?</p>
+            <div class="modal-buttons">
+                <button id="retry-incorrect" class="modal-button">Yanlışları Tekrar Çalış</button>
+                <button id="new-session" class="modal-button">Yeni Çalışma</button>
+            </div>
+        </div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
-
